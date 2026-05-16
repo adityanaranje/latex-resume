@@ -1,0 +1,234 @@
+%----------------------------------------------------------------------------------------
+% Aditya Naranje — Resume (LaTeX)
+% Compiler: pdflatex or xelatex
+%----------------------------------------------------------------------------------------
+
+\documentclass[10pt, letterpaper]{article}
+
+% --- Packages ---
+\usepackage[left=0.55in, right=0.55in, top=0.5in, bottom=0.5in]{geometry}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{fontenc}
+\usepackage{inputenc}
+\usepackage{multicol}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{tabularx}
+
+% --- Hyperlink styling ---
+\hypersetup{
+    colorlinks=true,
+    urlcolor=black,
+    linkcolor=black
+}
+
+% --- Section formatting ---
+\titleformat{\section}
+  {\vspace{-6pt}\scshape\raggedright\large\bfseries}
+  {}{0em}{}
+  [\color{black}\titlerule\vspace{-4pt}]
+
+% --- No paragraph indent ---
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+
+% --- List settings ---
+\setlist[itemize]{leftmargin=1.2em, topsep=2pt, itemsep=1pt, parsep=0pt}
+
+% --- Custom commands ---
+\newcommand{\resumeItem}[1]{%
+  \item\small{#1}
+}
+
+\newcommand{\resumeSubheading}[4]{%
+  \vspace{2pt}
+  \begin{tabular*}{\textwidth}{@{}l@{\extracolsep{\fill}}r@{}}
+    \textbf{#1} \textit{\small $|$ #2} & \small #3 -- #4 \\
+  \end{tabular*}\vspace{-4pt}
+}
+
+\newcommand{\resumeProject}[2]{%
+  \vspace{3pt}
+  \textbf{#1} \hfill \small\textit{#2}\\
+}
+
+%----------------------------------------------------------------------------------------
+\begin{document}
+\pagestyle{empty}
+
+%----------------------------------------------------------------------------------------
+% HEADER
+%----------------------------------------------------------------------------------------
+\begin{center}
+  {\Huge \textbf{ADITYA NARANJE}} \\[4pt]
+  \small
+  +91 9022121737 \quad|\quad Amravati, Maharashtra \\[2pt]
+  \href{mailto:aditya.naranje7@gmail.com}{aditya.naranje7@gmail.com} \quad|\quad
+  \href{https://linkedin.com/in/anaranje}{linkedin.com/in/anaranje} \quad|\quad
+  \href{https://github.com/adityanaranje}{github.com/adityanaranje}
+\end{center}
+
+\vspace{-4pt}
+
+%----------------------------------------------------------------------------------------
+% PROFESSIONAL SUMMARY
+%----------------------------------------------------------------------------------------
+\section{Professional Summary}
+
+Gen AI Engineer with 2+ years building production-grade LangGraph agentic pipelines and multi-bot RAG systems in the insurance and IT domains. Shipped systems that reduced insurance document comprehension from 30 min to under 5 seconds, cut PR review effort by $\sim$85\%, and deployed multi-bot RAG infrastructure on AWS EC2. Core stack: LangChain $\cdot$ LangGraph $\cdot$ FastAPI $\cdot$ AWS Bedrock $\cdot$ Pinecone $\cdot$ Python $\cdot$ SQL $\cdot$ Machine Learning.
+
+\vspace{-2pt}
+
+%----------------------------------------------------------------------------------------
+% KEY ACHIEVEMENTS
+%----------------------------------------------------------------------------------------
+\section{Key Achievements}
+
+\begin{itemize}
+  \resumeItem{Cut insurance policy comprehension time from 20-30 min to \textbf{under 5 seconds} using a Multi-Agent RAG system built with LangGraph and LLMs.}
+  \resumeItem{Reduced GitHub PR manual review effort by \textbf{$\sim$85\%} and improved PR turnaround time by \textbf{$\sim$70\%} via an LLM-based automated reviewer.}
+  \resumeItem{Built and deployed a production-grade multi-bot RAG platform (10+ bots) on AWS EC2 with Docker, Nginx, and Cloudflare; reduced hallucinations by \textbf{$\sim$30\%} with answer validation loop.}
+\end{itemize}
+
+\vspace{-2pt}
+
+%----------------------------------------------------------------------------------------
+% TECHNICAL SKILLS
+%----------------------------------------------------------------------------------------
+\section{Technical Skills}
+
+\begin{tabular}{@{} >{\bfseries}p{3.8cm} p{13.2cm} @{}}
+  Generative AI       & LLM, RAG, Agentic AI, Multi-Agent Systems, Prompt Engineering, Embeddings, Transformers, NLP \\[2pt]
+  Orchestration       & LangChain, LangGraph, LlamaIndex (familiar), FastAPI, Flask, Streamlit \\[2pt]
+  Vector Databases    & Pinecone, FAISS, ChromaDB \\[2pt]
+  Machine Learning    & Supervised \& Unsupervised Learning, Classification \& Regression, Neural Networks, Model Fine-Tuning, Model Evaluation \\[2pt]
+  Cloud \& MLOps      & AWS Bedrock, SageMaker, AWS Lambda, AWS EC2, Docker, MLflow, Apache Airflow, Weights \& Biases \\[2pt]
+  Evaluation Tools    & LangSmith, RAGAS (answer relevance scoring) \\[2pt]
+  Frameworks          & PyTorch, Scikit-Learn, NumPy, Pandas, Matplotlib, Seaborn \\[2pt]
+  Languages           & Python, SQL, JavaScript, HTML, CSS \\[2pt]
+  Platforms \& Data   & Hugging Face, n8n, Agent Builder, Power BI, Cloudflare, Nginx \\[2pt]
+  Soft Skills         & Client Collaboration, Problem Solving, Communication, Teamwork, Time Management \\
+\end{tabular}
+
+\vspace{-2pt}
+
+%----------------------------------------------------------------------------------------
+% WORK EXPERIENCE
+%----------------------------------------------------------------------------------------
+\section{Work Experience}
+
+\resumeSubheading{Gen AI/ML Engineer}{Nvest Solutions Private Limited, Thane, MH}{Jun 2024}{Present}
+\begin{itemize}
+  \resumeItem{Engineered an LLM-based GitHub PR reviewer using Python, LangGraph, and Flask, automating code validation, severity scoring, and inline fix suggestions---cutting manual review effort by $\sim$85\% and improving PR turnaround time by $\sim$70\%.}
+  \resumeItem{Developed and deployed a Multi-Agent RAG system (LangGraph, LLM) to automate insurance policy analysis, reducing document comprehension time from 20--30 min to under 5 seconds; monitored pipeline quality using LangSmith traces.}
+  \resumeItem{Built a machine learning-based policy renewal propensity model achieving \textbf{89\% accuracy}, enabling data-driven retention strategies aligned with business objectives.}
+  \resumeItem{Automated validation logic and data processing workflows using SQL, Excel, JavaScript, and C\#, achieving 20\% faster delivery cycles across multiple insurance product builds.}
+  \resumeItem{Coordinated across teams for UAT, Pre-Prod, and Production testing, delivering 8+ insurance product releases on time with minimal critical defects.}
+\end{itemize}
+
+\vspace{4pt}
+
+\resumeSubheading{ServiceNow Internship Trainee}{Cognizant, Pune, MH}{Dec 2023}{May 2024}
+\begin{itemize}
+  \resumeItem{Designed and implemented an approval workflow and automated notification system in ServiceNow, cutting leave request processing time by 40\% and eliminating manual follow-ups.}
+  \resumeItem{Developed custom business rules, client scripts, and workflow automations to streamline IT service operations, reducing average ticket resolution time and manual intervention.}
+  \resumeItem{Built and configured ServiceNow forms and workflows tailored to client requirements, improving process consistency and reducing data entry errors across IT service pipelines.}
+\end{itemize}
+
+\vspace{-2pt}
+
+%----------------------------------------------------------------------------------------
+% PROJECTS
+%----------------------------------------------------------------------------------------
+\section{Projects}
+
+\resumeProject{Isolated Multi-Bot RAG System \normalfont{\href{https://github.com/adityanaranje}{[GitHub]}}}{Python, LangGraph, Pinecone, Docker, AWS EC2, Nginx, Cloudflare}
+\textit{Architecture: LangGraph decision router $\rightarrow$ Pinecone namespace retrieval $\rightarrow$ LLM generation $\rightarrow$ validation loop (3 retries)}
+\begin{itemize}
+  \resumeItem{Developed a production-ready multi-bot RAG platform supporting isolated knowledge bases for 10+ AI bots using Pinecone namespaces for scalable vector storage.}
+  \resumeItem{Designed a LangGraph-based decision pipeline to dynamically route queries between vector retrieval and direct LLM responses, improving response relevance by $\sim$35\% over a static RAG pipeline.}
+  \resumeItem{Engineered LLM-driven context relevance scoring (0--1 scale) and an answer validation loop with up to 3 retries, reducing hallucinations by $\sim$30\%.}
+  \resumeItem{Deployed on AWS EC2 using Docker, Nginx, and Cloudflare with Watchtower for automated container updates, reducing manual deployment effort by $\sim$80\%.}
+\end{itemize}
+
+\vspace{4pt}
+
+\resumeProject{AI Email Summary Job Agent — Telegram Bot \normalfont{\href{https://github.com/adityanaranje}{[GitHub]}}}{Gmail API, Telegram Bot API, GitHub Actions, Python, LangChain, OpenAI}
+\begin{itemize}
+  \resumeItem{Developed an AI-powered email automation agent that monitors Gmail for job-related emails and sends structured alerts to Telegram, reducing manual email screening effort.}
+  \resumeItem{Implemented LLM-based email analysis using OpenAI and LangChain to classify emails and extract job metadata (company, role, location, experience, required skills).}
+  \resumeItem{Automated the system using GitHub Actions scheduled workflows running every 15 minutes, enabling serverless execution without dedicated infrastructure.}
+\end{itemize}
+
+\vspace{4pt}
+
+\resumeProject{RAG Chatbot with Amazon Bedrock AgentCore \normalfont{\href{https://github.com/adityanaranje}{[GitHub]}}}{Python, Amazon Bedrock AgentCore, LangChain, FAISS, Groq LLM}
+\begin{itemize}
+  \resumeItem{Built a RAG chatbot for fitness Q\&A using FAISS vector search over 500+ knowledge chunks, improving response relevance by $\sim$40\% over direct LLM responses.}
+  \resumeItem{Integrated Groq LLM (Llama-3.3-70B) with LangChain tools and deployed on Amazon Bedrock AgentCore runtime; implemented persistent cross-session memory using AgentCoreMemoryStore.}
+  \resumeItem{Containerised and deployed using Docker and AWS AgentCore CLI with automated deployment to Amazon ECR.}
+\end{itemize}
+
+\vspace{4pt}
+
+\resumeProject{GitHub Event Automation Workflow \normalfont{\href{https://github.com/adityanaranje}{[GitHub]}}}{n8n, Google Gemini LLM, JavaScript}
+\begin{itemize}
+  \resumeItem{Built an end-to-end automation pipeline in n8n handling 5+ GitHub event types (push, PR, commit, star, unstar), sending structured notifications via Telegram and Email.}
+  \resumeItem{Integrated Google Gemini LLM for intelligent message formatting and summarisation; JavaScript-based logic minimised manual intervention by $\sim$80--85\%.}
+\end{itemize}
+
+\vspace{4pt}
+
+\resumeProject{Advanced GitHub Repository RAG Q\&A System \normalfont{\href{https://github.com/adityanaranje}{[GitHub]}}}{Python, Groq LLM, FAISS, Hugging Face Embeddings}
+\begin{itemize}
+  \resumeItem{Built a RAG system for GitHub repositories supporting multi-language codebases (Python, JavaScript, C++, Java) with language-aware text splitting.}
+  \resumeItem{Optimised FAISS vector search, improving response accuracy and retrieval speed by $\sim$40\%; enabled code-aware Q\&A with source file attribution.}
+\end{itemize}
+
+\vspace{-2pt}
+
+%----------------------------------------------------------------------------------------
+% EDUCATION
+%----------------------------------------------------------------------------------------
+\section{Education}
+
+\begin{tabular*}{\textwidth}{@{}l@{\extracolsep{\fill}}r@{}}
+  \textbf{Bachelor of Computer Science} & \small 2019 -- 2023 \\
+  \textit{Sant Gadge Baba Amravati University} & \small CGPA: \textbf{9.14 / 10} \\
+\end{tabular*}
+
+\vspace{4pt}
+
+\begin{tabular*}{\textwidth}{@{}l@{\extracolsep{\fill}}r@{}}
+  \textbf{12th Grade, Maharashtra State Board} & \small 2018 -- 2019 \\
+  \textit{Rajeshwar Union Junior College, Badnera} & \small Percentage: 85.08\% \\
+\end{tabular*}
+
+\vspace{-2pt}
+
+%----------------------------------------------------------------------------------------
+% CERTIFICATIONS
+%----------------------------------------------------------------------------------------
+\section{Certifications}
+
+\begin{itemize}
+  \resumeItem{Generative AI using LangChain and Hugging Face --- Udemy}
+  \resumeItem{Introduction to Data Science --- IBM}
+  \resumeItem{Machine Learning --- Internshala}
+  \resumeItem{Training Neural Networks in Python --- LinkedIn Learning}
+  \resumeItem{Feature Engineering --- Kaggle}
+\end{itemize}
+
+\vspace{-2pt}
+
+%----------------------------------------------------------------------------------------
+% ACHIEVEMENTS & AWARDS
+%----------------------------------------------------------------------------------------
+\section{Achievements \& Awards}
+
+\textbf{Employee of the Month --- July 2025} \\
+\textit{Recognised for outstanding performance, technical contribution, and consistent delivery of high-quality solutions.}
+
+\end{document}
