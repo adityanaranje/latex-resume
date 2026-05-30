@@ -1,7 +1,10 @@
 import os
 import subprocess
+import tempfile
+import gradio as gr
 from dotenv import load_dotenv
-import streamlit as st
+from pypdf import PdfReader
+from docx import Document
 
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
@@ -9,22 +12,62 @@ from langchain_core.output_parsers import StrOutputParser
 
 load_dotenv()
 
-st.title("AI Resume Tailor")
-
+# Load Resume Template
 with open("resume_template.tex", "r", encoding="utf-8") as f:
     latex_template = f.read()
 
-resume_content = st.text_area(
-    "Paste Existing Resume Content",
-    height=300
-)
 
-jd = st.text_area(
-    "Paste Job Description",
-    height=300
-)
+def extract_text_from_file(file):
 
-if st.button("Generate Resume"):
+    if file is None:
+        return ""
+
+    file_path = file
+
+    if file_path.endswith(".txt"):
+        with open(file_path, "r", encoding="utf-8") as f:
+            return f.read()
+
+    elif file_path.endswith(".pdf"):
+        reader = PdfReader(file_path)
+        text = ""
+
+        for page in reader.pages:
+            page_text = page.extract_text()
+            if page_text:
+                text += page_text + "\n"
+
+        return text
+
+    elif file_path.endswith(".docx"):
+        doc = Document(file_path)
+
+        text = "\n".join(
+            paragraph.text
+            for paragraph in doc.paragraphs
+        )
+
+        return text
+
+    return ""
+
+
+def generate_resume(jd_text, jd_file):
+
+    uploaded_jd = extract_text_from_file(jd_file)
+
+    final_jd = ""
+
+    if jd_text and jd_text.strip():
+        final_jd += jd_text
+
+    if uploaded_jd:
+        final_jd += "\n\n" + uploaded_jd
+
+    if not final_jd.strip():
+        raise gr.Error(
+            "Please paste a Job Description or upload a file."
+        )
 
     llm = ChatOpenAI(
         model="gpt-4.1-mini",
@@ -32,20 +75,18 @@ if st.button("Generate Resume"):
     )
 
     prompt = ChatPromptTemplate.from_template("""
-You are an ATS resume optimization assistant.
+You are an ATS Resume Optimization Assistant.
 
-STRICT RULES:
-- Return ONLY optimized resume content.
-- Do NOT add explanations.
-- Do NOT add notes.
-- Do NOT add markdown.
-- Do NOT add ATS optimization comments.
-- Do NOT add fake experience.
-- Keep original meaning.
-- Keep formatting placeholders untouched.
-- Improve ATS keywords according to JD.
+Your task:
+1. Analyze the job description.
+2. Optimize the resume content for ATS.
+3. Add relevant keywords naturally.
+4. Keep all information truthful.
+5. Do not invent experience.
+6. Keep professional formatting.
+7. Return ONLY resume content.
 
-RESUME:
+CURRENT RESUME:
 {resume}
 
 JOB DESCRIPTION:
@@ -54,12 +95,13 @@ JOB DESCRIPTION:
 
     chain = prompt | llm | StrOutputParser()
 
-    optimized_content = chain.invoke({
-        "resume": resume_content,
-        "jd": jd
-    })
+    optimized_content = chain.invoke(
+        {
+            "resume": latex_template,
+            "jd": final_jd
+        }
+    )
 
-    # Inject content into LaTeX
     final_tex = latex_template.replace(
         "{{PROJECTS}}",
         optimized_content
@@ -72,35 +114,120 @@ JOB DESCRIPTION:
     with open(tex_path, "w", encoding="utf-8") as f:
         f.write(final_tex)
 
-    # Generate PDF using pdflatex
-    subprocess.run([
-        "pdflatex",
-        "-output-directory=output",
-        tex_path
-    ])
+    try:
+
+        subprocess.run(
+            [
+                "pdflatex",
+                "-interaction=nonstopmode",
+                "-output-directory=output",
+                tex_path
+            ],
+            check=True
+        )
+
+        subprocess.run(
+            [
+                "pandoc",
+                tex_path,
+                "-o",
+                "output/tailored_resume.docx"
+            ],
+            check=True
+        )
+
+    except subprocess.CalledProcessError as e:
+        raise gr.Error(
+            f"Resume generation failed: {str(e)}"
+        )
 
     pdf_path = "output/tailored_resume.pdf"
+    docx_path = "output/tailored_resume.docx"
 
-    # Generate DOCX using pandoc
-    subprocess.run([
-        "pandoc",
-        tex_path,
-        "-o",
-        "output/tailored_resume.docx"
-    ])
+    return (
+        "✅ Resume tailored successfully!",
+        pdf_path,
+        docx_path
+    )
 
-    st.success("Resume Generated!")
 
-    with open(pdf_path, "rb") as f:
-        st.download_button(
-            "Download PDF",
-            f,
-            file_name="tailored_resume.pdf"
+with gr.Blocks(
+    theme=gr.themes.Soft(),
+    title="AI Resume Tailor"
+) as demo:
+
+    gr.HTML(
+        """
+        <div style="text-align:center;padding:20px">
+            <h1>🚀 AI Resume Tailor</h1>
+            <p>
+                Upload a Job Description or paste it below.
+                Your LaTeX resume template will be optimized
+                automatically for ATS.
+            </p>
+        </div>
+        """
+    )
+
+    with gr.Row():
+
+        with gr.Column():
+
+            jd_text = gr.Textbox(
+                label="Paste Job Description",
+                lines=12,
+                placeholder="""
+Paste the job description here...
+
+Example:
+Looking for a Machine Learning Engineer with:
+• Python
+• SQL
+• AWS
+• GenAI
+• Docker
+• MLOps
+"""
+            )
+
+            jd_file = gr.File(
+                label="Upload JD File",
+                file_types=[
+                    ".pdf",
+                    ".docx",
+                    ".txt"
+                ]
+            )
+
+            generate_btn = gr.Button(
+                "✨ Generate ATS Resume",
+                variant="primary",
+                size="lg"
+            )
+
+    status = gr.Markdown()
+
+    with gr.Row():
+
+        pdf_output = gr.File(
+            label="📄 Download PDF Resume"
         )
 
-    with open("output/tailored_resume.docx", "rb") as f:
-        st.download_button(
-            "Download DOCX",
-            f,
-            file_name="tailored_resume.docx"
+        docx_output = gr.File(
+            label="📝 Download DOCX Resume"
         )
+
+    generate_btn.click(
+        fn=generate_resume,
+        inputs=[
+            jd_text,
+            jd_file
+        ],
+        outputs=[
+            status,
+            pdf_output,
+            docx_output
+        ]
+    )
+
+demo.launch()
